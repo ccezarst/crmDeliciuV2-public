@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "c9e3bc64-7f60-40ee-bb6b-c9ba01ed9f16",
+		"name": "CRM-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27173530"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reasons = { // global response failure reasons\r",
+									"    // same set of reasons will be inside the app in used as keys in a dict for responses\r",
+									"    auth: {\r",
+									"        token: {\r",
+									"            invalid: \"auth_token_invalid\",\r",
+									"            expired: \"auth_token_expired\",\r",
+									"            format: {\r",
+									"                invalid: \"auth_token_format_invalid\"\r",
+									"            }\r",
+									"        },\r",
+									"        cookie: {\r",
+									"            invalid: \"auth_cookie_invalid\",\r",
+									"        },\r",
+									"        permissions: {\r",
+									"            userDoesntHave: \"auth_user_permissions_lack\",\r",
+									"        }\r",
+									"    },\r",
+									"    user: {\r",
+									"        exists: \"user_exists\",\r",
+									"        doesntExist: \"user_notExists\",\r",
+									"        invalidUsernameOrPassword: \"user_headers_invalid\",\r",
+									"    }\r",
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.collectionVariables.set(\"account_token\", pm.response.text()); // set the account_token to response which is the account token\r",
+									"});\r",
+									"pm.test(\"User and password are ok\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.user.invalidUsernameOrPassword)\r",
+									"});\r",
+									"pm.test(\"User already exists\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.user.exists)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//token format\r",
+									"// creationEpoch-randomNum-expirationEpoch\r",
+									"// creationEpoch -> when the token was created in epoch format\r",
+									"// randomNum -> random token cuz whynot\r",
+									"// expirationEpoch -> when said token expires in epoch format"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "{{account_username}}",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "{{account_password}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/users/register",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reasons = { // global response failure reasons\r",
+									"    // same set of reasons will be inside the app in used as keys in a dict for responses\r",
+									"    auth: {\r",
+									"        token: {\r",
+									"            invalid: \"auth_token_invalid\",\r",
+									"            expired: \"auth_token_expired\",\r",
+									"            format: {\r",
+									"                invalid: \"auth_token_format_invalid\"\r",
+									"            }\r",
+									"        },\r",
+									"        cookie: {\r",
+									"            invalid: \"auth_cookie_invalid\",\r",
+									"        },\r",
+									"        permissions: {\r",
+									"            userDoesntHave: \"auth_user_permissions_lack\",\r",
+									"        }\r",
+									"    },\r",
+									"    user: {\r",
+									"        exists: \"user_exists\",\r",
+									"        doesntExist: \"user_notExists\",\r",
+									"        invalidUsernameOrPassword: \"user_headers_invalid\",\r",
+									"    }\r",
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.collectionVariables.set(\"account_token\", pm.response.text()); // set the account_token to response which is the account token\r",
+									"});\r",
+									"pm.test(\"User and password are ok\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.user.invalidUsernameOrPassword)\r",
+									"});\r",
+									"pm.test(\"User already exists\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.user.doesntExist)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//token format\r",
+									"// creationEpoch-randomNum-expirationEpoch\r",
+									"// creationEpoch -> when the token was created in epoch format\r",
+									"// randomNum -> random token cuz whynot\r",
+									"// expirationEpoch -> when said token expires in epoch format"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "{{account_username}}",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "{{account_password}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/users/login",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reasons = { // global response failure reasons\r",
+									"    // same set of reasons will be inside the app in used as keys in a dict for responses\r",
+									"    auth: {\r",
+									"        token: {\r",
+									"            invalid: \"auth_token_invalid\",\r",
+									"            expired: \"auth_token_expired\",\r",
+									"            format: {\r",
+									"                invalid: \"auth_token_format_invalid\"\r",
+									"            }\r",
+									"        },\r",
+									"        cookie: {\r",
+									"            invalid: \"auth_cookie_invalid\",\r",
+									"        },\r",
+									"        permissions: {\r",
+									"            userDoesntHave: \"auth_user_permissions_lack\",\r",
+									"        }\r",
+									"    },\r",
+									"    user: {\r",
+									"        exists: \"user_exists\",\r",
+									"        doesntExist: \"user_notExists\",\r",
+									"        invalidUsernameOrPassword: \"user_headers_invalid\",\r",
+									"    }\r",
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // set the account_token to response which is the account token\r",
+									"    pm.collectionVariables.set(\"temp_requestID\", pm.response.text()); // set the account_token to response which is the account token\r",
+									"});\r",
+									"pm.test(\"Token format is valid\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.format.invalid)\r",
+									"});\r",
+									"pm.test(\"Token is valid\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.invalid)\r",
+									"});\r",
+									"pm.test(\"Token is not expired\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.expired)\r",
+									"});\r",
+									"pm.test(\"User has permission to /api/caca\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.permissions.userDoesntHave)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//token format\r",
+									"// creationEpoch-randomNum-expirationEpoch\r",
+									"// creationEpoch -> when the token was created in epoch format\r",
+									"// randomNum -> random token cuz whynot\r",
+									"// expirationEpoch -> when said token expires in epoch format"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{account_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/caca",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"caca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add permission to account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{account_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/caca",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"caca"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "proccess",
+			"item": [
+				{
+					"name": "get proc status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reasons = { // global response failure reasons\r",
+									"    // same set of reasons will be inside the app in used as keys in a dict for responses\r",
+									"    auth: {\r",
+									"        token: {\r",
+									"            invalid: \"auth_token_invalid\",\r",
+									"            expired: \"auth_token_expired\",\r",
+									"            format: {\r",
+									"                invalid: \"auth_token_format_invalid\"\r",
+									"            }\r",
+									"        },\r",
+									"        cookie: {\r",
+									"            invalid: \"auth_cookie_invalid\",\r",
+									"        },\r",
+									"        permissions: {\r",
+									"            userDoesntHave: \"auth_user_permissions_lack\",\r",
+									"        }\r",
+									"    },\r",
+									"    user: {\r",
+									"        exists: \"user_exists\",\r",
+									"        doesntExist: \"user_notExists\",\r",
+									"        invalidUsernameOrPassword: \"user_headers_invalid\",\r",
+									"    }\r",
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // set the account_token to response which is the account token\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//token format\r",
+									"// creationEpoch-randomNum-expirationEpoch\r",
+									"// creationEpoch -> when the token was created in epoch format\r",
+									"// randomNum -> random token cuz whynot\r",
+									"// expirationEpoch -> when said token expires in epoch format"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "proccessid",
+								"value": "{{temp_requestID}}",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{account_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/proccess/getStatus",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"proccess",
+								"getStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gomag",
+			"item": [
+				{
+					"name": "test",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reasons = { // global response failure reasons\r",
+									"    // same set of reasons will be inside the app in used as keys in a dict for responses\r",
+									"    auth: {\r",
+									"        token: {\r",
+									"            invalid: \"auth_token_invalid\",\r",
+									"            expired: \"auth_token_expired\",\r",
+									"            format: {\r",
+									"                invalid: \"auth_token_format_invalid\"\r",
+									"            }\r",
+									"        },\r",
+									"        cookie: {\r",
+									"            invalid: \"auth_cookie_invalid\",\r",
+									"        },\r",
+									"        permissions: {\r",
+									"            userDoesntHave: \"auth_user_permissions_lack\",\r",
+									"        }\r",
+									"    },\r",
+									"    user: {\r",
+									"        exists: \"user_exists\",\r",
+									"        doesntExist: \"user_notExists\",\r",
+									"        invalidUsernameOrPassword: \"user_headers_invalid\",\r",
+									"    }\r",
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // set the account_token to response which is the account token\r",
+									"    pm.collectionVariables.set(\"temp_requestID\", pm.response.text()); // set the account_token to response which is the account token\r",
+									"});\r",
+									"pm.test(\"Token format is valid\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.format.invalid)\r",
+									"});\r",
+									"pm.test(\"Token is valid\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.invalid)\r",
+									"});\r",
+									"pm.test(\"Token is not expired\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.token.expired)\r",
+									"});\r",
+									"pm.test(\"User has permission to /api/caca\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.eql(reasons.auth.permissions.userDoesntHave)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//token format\r",
+									"// creationEpoch-randomNum-expirationEpoch\r",
+									"// creationEpoch -> when the token was created in epoch format\r",
+									"// randomNum -> random token cuz whynot\r",
+									"// expirationEpoch -> when said token expires in epoch format"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{account_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_to_api}}/api/deliciuTest",
+							"host": [
+								"{{url_to_api}}"
+							],
+							"path": [
+								"api",
+								"deliciuTest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_to_api",
+			"value": "http://localhost:42069",
+			"type": "string"
+		},
+		{
+			"key": "account_username",
+			"value": "caca",
+			"type": "string"
+		},
+		{
+			"key": "account_password",
+			"value": "caca",
+			"type": "string"
+		},
+		{
+			"key": "account_token",
+			"value": "caca",
+			"type": "string"
+		},
+		{
+			"key": "temp_requestID",
+			"value": ""
+		}
+	]
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>fileGen</title>
+    </head>
+    <body style="background-color: white"> 
+        <h1>Apasa pe buton ca sa generzi fisierul</h1>
+        <button  id="fileGen">Generaza Fisier</button>
+        <iframe id="my_iframe" style="display:none;"></iframe>
+        <script>
+            const fileGenAddress = "http://stylr.go.ro:42069/api/fileGen"
+            let button = document.getElementById("fileGen")
+            function Download(url) {
+                    document.getElementById('my_iframe').src = url;
+            };
+            button.addEventListener("click", ()=>{
+                const h3 = document.createElement("h3")
+                document.body.appendChild(h3)
+                const textNode = document.createTextNode("Generand fisier...")
+                h3.appendChild(textNode)
+                Download(fileGenAddress)
+                // fetch(fileGenAddress)
+                //     .then((response) => {
+                //         if (response.ok) {
+                //             return response.json();
+                //         }
+                //         else {
+                //             throw new Error('Something went wrong!');
+                //         }
+                //     })
+                //     .then((data) => {
+                //         console.log(data);
+                //     })
+                //     .catch((error) => {
+                //         console.log(error)
+                //     });
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{
+    "caca": {
+        "password": "caca",
+        "permissions": [
+            "/api/test"
+        ],
+        "token": "1725638306262-EOfZ24DfymfCeQiegBVAgmsr3QWOmq7XyM57v8LEPREEqXKAlK-1728230306262"
+    },
+    "caca2": {
+        "password": "caca2",
+        "permissions": [
+            "/api/test"
+        ],
+        "token": "1708115093703-3c224L6YcwBin2ZwoyZKWOrcJgsj2ZSBWZcGXODXCVc5wOayPi-1708117685703"
+    }
+}

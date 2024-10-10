@@ -1,0 +1,6 @@
+{
+    "ignore": ["usersDB.json", "logs/*"],
+    "env": {
+        "NODE_ENV": "dev"
+    }  
+}
